@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuyên Đề Cấu Trúc Từ Loại Word Form - Ms Lê Hằng English</title>
+    <!-- Google Fonts: Quicksand mang lại giao diện scannable cực tốt cho học sinh -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8854C0;
+            --accent-color: #FDCB6E;
+            --teal-color: #00C9A7;
+            --correct-color: #00D26A;
+            --wrong-color: #FF4757;
+            --text-color: #2D3436;
+            --card-bg: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Hiệu ứng nền loang màu linh hoạt chuyển động liên tục + Họa tiết độc lập */
+        body {
+            background: linear-gradient(-45deg, #8854C0, #FDCB6E, #00C9A7, #FF7675);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+            opacity: 0.13;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M20 20 L30 20 L30 30 L20 30 Z M70 20 A 8 8 0 1 1 70 36 A 8 8 0 1 1 70 20 M50 70 L55 80 L65 80 L57 86 L60 96 L50 90 L40 96 L43 86 L35 80 L45 80 Z' /%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 25s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 1000px; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 780px;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        header h5 {
+            font-size: 1.05rem;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Khung nhắc nhở học tập quan trọng */
+        .warning-box {
+            background: #FFEAA7;
+            border: 4px solid #FDCB6E;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 0 #E17055;
+            color: #2D3436;
+            text-align: center;
+        }
+
+        .warning-box h4 {
+            font-size: 1.25rem;
+            color: #D63031;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .warning-box p {
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 700;
+        }
+
+        .warning-box em {
+            display: block;
+            margin-top: 10px;
+            color: #6C5CE7;
+            font-style: normal;
+            font-weight: 900;
+        }
+
+        /* Thẻ bài Card hiển thị câu hỏi */
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            border: 3px solid #E0E0E0;
+            transition: transform 0.2s ease;
+        }
+
+        .card-meta-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #A0A0A0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            background: #F8F9FA;
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 5px solid #6C5CE7;
+        }
+
+        /* Nút chọn đáp án 3D nổi bật bo góc lớn */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #FFFFFF;
+            border: 3px solid #E0E0E0;
+            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #E0E0E0;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 8px 0 #D0D0D0;
+            background: #FAEDFF;
+        }
+
+        .option-btn:active:not(.disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #D0D0D0;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-color) !important;
+            border-color: #00B359 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #008040 !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-color) !important;
+            border-color: #E03847 !important;
+            color: white !important;
+            box-shadow: 0 6px 0 #B32431 !important;
+        }
+
+        .option-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        /* Hiệu ứng rung khi làm sai */
+        @keyframes shakeAction {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake-animation {
+            animation: shakeAction 0.4s ease-in-out;
+        }
+
+        /* Khung hiển thị giải thích chi tiết bung mở mượt mà */
+        .explanation-box {
+            margin-top: 20px;
+            background: #F3EAFE;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 15px 18px;
+            display: none;
+            animation: slideDown 0.4s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .explanation-title {
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .explanation-content strong {
+            color: #000000;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .submit-all-btn {
+            background: #6C5CE7;
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 22px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #4834D4;
+            transition: all 0.1s;
+        }
+
+        .submit-all-btn:hover {
+            background: #5F27CD;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #4834D4;
+        }
+
+        .submit-all-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #4834D4;
+        }
+
+        /* Pháo hoa Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Modal tổng kết điểm */
+        .modal-mask {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-mask.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+            border: 4px solid var(--accent-color);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .modal-mask.active .modal-container { transform: scale(1); }
+        .modal-score { font-size: 3rem; font-weight: 900; color: var(--primary-color); margin: 15px 0; }
+        .modal-feedback { font-size: 1.05rem; color: var(--text-color); font-weight: 700; line-height: 1.6; margin-bottom: 25px; }
+        .modal-btn {
+            background: var(--teal-color);
+            color: white; border: none; padding: 12px 30px;
+            font-size: 1.05rem; font-weight: 700; border-radius: 14px;
+            box-shadow: 0 4px 0 #00A387; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <h5>Giáo viên tạo: Ms Lê Hằng English</h5>
+        </header>
+
+        <div class="warning-box">
+            <h4>⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</h4>
+            <p>Hãy đọc kỹ phần phân tích ngữ pháp và bảng Word Family (Gia đình từ) hiện lên sau mỗi lựa chọn để thực sự làm chủ kiến thức nhé!</p>
+            <em>* Kéo tới đâu, thử sức tới đó! *</em>
+        </div>
+
+        <!-- Node chính để tiêm mã hỏi đáp tự động -->
+        <div id="quiz-injector-node"></div>
+
+        <div class="submit-section">
+            <button class="submit-all-btn" onclick="processQuizEvaluation()">NỘP BÀI CHẤM ĐIỂM 🎉</button>
+        </div>
+    </div>
+
+    <div class="modal-mask" id="score-modal">
+        <div class="modal-container">
+            <h2>🏆 KẾT QUẢ BÀI KIỂM TRA 🏆</h2>
+            <div class="modal-score" id="score-text">0 / 50</div>
+            <div class="modal-feedback" id="feedback-text">Lời khuyên tuyển sinh từ cô giáo...</div>
+            <button class="modal-btn" onclick="reloadQuizLayout()">Làm Lại Từ Đầu 🔄</button>
+        </div>
+    </div>
+
+    <script>
+        // Hệ thống âm thanh phản hồi Web Audio API
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        let audioContextInstance = null;
+
+        function triggerSyntheticSound(status) {
+            try {
+                if (!audioContextInstance) audioContextInstance = new AudioCtxClass();
+                const osc = audioContextInstance.createOscillator();
+                const gain = audioContextInstance.createGain();
+                osc.connect(gain);
+                gain.connect(audioContextInstance.destination);
+
+                if (status === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, audioContextInstance.currentTime);
+                    osc.frequency.setValueAtTime(783.99, audioContextInstance.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.15, audioContextInstance.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContextInstance.currentTime + 0.35);
+                    osc.start(audioContextInstance.currentTime);
+                    osc.stop(audioContextInstance.currentTime + 0.35);
+                } else if (status === 'wrong') {
+                    const time = audioContextInstance.currentTime;
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(196, time);
+                    osc.frequency.setValueAtTime(146.83, time + 0.12);
+                    osc.frequency.setValueAtTime(110, time + 0.25);
+                    gain.gain.setValueAtTime(0.2, time);
+                    gain.gain.exponentialRampToValueAtTime(0.01, time + 0.45);
+                    osc.start(time);
+                    osc.stop(time + 0.45);
+                }
+            } catch (e) { console.log("Web Audio API blocked or unsupported."); }
+        }
+
+        // BỘ DỮ LIỆU TOÀN VẸN 50 CÂU WORD FORM VÀ WORD FAMILY ĐẦY ĐỦ KHÔNG CẮT XÉN
+        const dataset = [
+            {
+                id: 1,
+                text: "The (BORED) of afternoon duty could be relieved by friendly conversation.",
+                options: ["boredom", "boring", "bored", "bore"],
+                correct: "boredom",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau mạo từ <em>The</em> và trước giới từ <em>of</em>, vị trí này đóng vai trò làm chủ ngữ chính nên cần một **Danh từ**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>bore</strong> (làm ai chán)<br>• Danh từ: <strong>boredom</strong> (sự buồn chán), <strong>bore</strong> (người/vật gây chán)<br>• Tính từ: <strong>bored</strong> (cảm giác chán - người), <strong>boring</strong> (tính chất chán - vật)<br>• Trạng từ: <strong>boringly</strong>"
+            },
+            {
+                id: 2,
+                text: "You looked so (PEACE) when you fell asleep on the sofa.",
+                options: ["peaceful", "peacefully", "peace", "pacify"],
+                correct: "peaceful",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau hệ động từ chỉ giác quan (linking verb) <em>looked</em>, ta cần điền một **Tính từ** mô tả trạng thái chủ ngữ.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>pacify</strong> (làm yên bình, làm nguôi giận)<br>• Danh từ: <strong>peace</strong> (hòa bình, sự bình yên)<br>• Tính từ: <strong>peaceful</strong> (thanh bình, yên tĩnh)<br>• Trạng từ: <strong>peacefully</strong>"
+            },
+            {
+                id: 3,
+                text: "All four of my grandparents are still (LIVE).",
+                options: ["alive", "living", "live", "lively"],
+                correct: "alive",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau hệ động từ <em>are</em> và trạng từ <em>still</em>, cần tính từ chỉ trạng thái 'còn sống'. Tính từ <em>alive</em> chuyên đứng làm vị ngữ sau tobe.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>live</strong> (sống)<br>• Danh từ: <strong>life</strong> (cuộc sống), <strong>living</strong> (sinh kế)<br>• Tính từ: <strong>alive</strong> (còn sống), <strong>live</strong> (trực tiếp), <strong>lively</strong> (sống động)"
+            },
+            {
+                id: 4,
+                text: "Did you vote in the last (ELECT)?",
+                options: ["election", "elective", "elector", "elect"],
+                correct: "election",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau tính từ hạn định thời gian <em>last</em> và giới từ <em>in</em>, vị trí này cần một **Danh từ** chỉ sự kiện.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>elect</strong> (bầu cử, lựa chọn)<br>• Danh từ: <strong>election</strong> (cuộc bầu cử), <strong>elector</strong> (cử tri)<br>• Tính từ: <strong>elective</strong> (có tính lựa chọn), <strong>electoral</strong> (thuộc bầu cử)"
+            },
+            {
+                id: 5,
+                text: "It can be very difficult for (PRISON) when they leave prison and go back into the community.",
+                options: ["prisoners", "prisonment", "imprison", "prisoner"],
+                correct: "prisoners",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau giới từ <em>for</em> ta cần danh từ. Dựa vào đại từ số nhiều <em>they</em> phía sau, danh từ phải chỉ người ở dạng số nhiều (những tù nhân).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>imprison</strong> (bỏ tù, tống giam)<br>• Danh từ: <strong>prison</strong> (nhà tù), <strong>prisoner</strong> (tù nhân), <strong>imprisonment</strong> (sự bỏ tù)"
+            },
+            {
+                id: 6,
+                text: "At the end of the film, you hear a single (SHOOT) and then Al Pacino falls to the ground.",
+                options: ["shot", "shooting", "shooter", "shoot"],
+                correct: "shot",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau mạo từ <em>a</em> và tính từ <em>single</em> (duy nhất), ta cần một **Danh từ số ít**. Cụm từ cố định <em>a single shot</em> nghĩa là một tiếng súng nổ.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>shoot</strong> (bắn)<br>• Danh từ: <strong>shot</strong> (phát súng/cú sút), <strong>shooting</strong> (sự bắn giết), <strong>shooter</strong> (tay súng)"
+            },
+            {
+                id: 7,
+                text: "It’s (BELIEVE)! I’ve lost my glasses again!",
+                options: ["unbelievable", "believable", "believably", "belief"],
+                correct: "unbelievable",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau cấu trúc câu chủ ngữ giả <em>It's</em>, cần điền một tính từ. Ngữ cảnh làm mất kính lần nữa mang sắc thái cảm thán, ngạc nhiên bực mình nên dùng tính từ phủ định.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>believe</strong> (tin tưởng)<br>• Danh từ: <strong>belief</strong> (niềm tin), <strong>disbelief</strong> (sự hoài nghi)<br>• Tính từ: <strong>believable</strong> (có thể tin) $\leftrightarrow$ <strong>unbelievable</strong> (không thể tin được)"
+            },
+            {
+                id: 8,
+                text: "I think we’re all in (AGREE) that something must be done about the problem.",
+                options: ["agreement", "agreeable", "agree", "agreeably"],
+                correct: "agreement",
+                explain: "<strong>Lý do chọn từ loại:</strong> Thuộc cụm thành ngữ cố định (collocation): <em>be in agreement with/that...</em> nghĩa là đồng ý, nhất trí với điều gì.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>agree</strong> $\leftrightarrow$ <strong>disagree</strong> (đồng ý / phản đối)<br>• Danh từ: <strong>agreement</strong> $\leftrightarrow$ <strong>disagreement</strong> (sự đồng tình)<br>• Tính từ: <strong>agreeable</strong> (dễ chịu, sẵn sàng đồng ý)"
+            },
+            {
+                id: 9,
+                text: "Should I write “British” or “English” as my (NATION)?",
+                options: ["nationality", "national", "nation", "nationwide"],
+                correct: "nationality",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau tính từ sở hữu <em>my</em>, vị trí cuối vế câu này chắc chắn phải là một **Danh từ** (quốc tịch).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>nation</strong> (quốc gia), <strong>nationality</strong> (quốc tịch)<br>• Tính từ: <strong>national</strong> (thuộc quốc gia), <strong>nationwide</strong> (toàn quốc)<br>• Trạng từ: <strong>nationally</strong>"
+            },
+            {
+                id: 10,
+                text: "We’ll only have real (EQUAL) when women earn as much money as men.",
+                options: ["equality", "equalize", "equally", "equal"],
+                correct: "equality",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau tính từ <em>real</em> bổ nghĩa, ta cần điền một **Danh từ** làm tân ngữ cho động từ <em>have</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>equal</strong> (bằng với), <strong>equalize</strong> (san bằng tỷ số)<br>• Danh từ: <strong>equality</strong> $\leftrightarrow$ <strong>inequality</strong> (sự bình đẳng / bất bình đẳng)<br>• Tính từ: <strong>equal</strong> (ngang bằng)"
+            },
+            {
+                id: 11,
+                text: "She’s beautiful with a (LOVE) smile.",
+                options: ["lovely", "loving", "love", "lovably"],
+                correct: "lovely",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng trước danh từ nụ cười <em>smile</em>, cần một **Tính từ** miêu tả tính chất đáng yêu, xinh xắn.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: <strong>love</strong> (yêu / tình yêu)<br>• Tính từ: <strong>lovely</strong> (đáng yêu), <strong>lovable</strong> (dễ thương)<br>• Trạng từ: <strong>lovingly</strong>"
+            },
+            {
+                id: 12,
+                text: "(LUCK), the barber cut my hair too short.",
+                options: ["Unluckily", "Luckily", "Unlucky", "Lucky"],
+                correct: "Unluckily",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng đầu câu và ngăn cách bằng dấu phẩy bổ nghĩa cả mệnh đề $\rightarrow$ cần **Trạng từ**. Ngữ cảnh bị cắt tóc quá ngắn mang sắc thái tiêu cực nên dùng từ phủ định.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>luck</strong> (sự may mắn)<br>• Tính từ: <strong>lucky</strong> $\leftrightarrow$ <strong>unlucky</strong> (may mắn / xui xẻo)<br>• Trạng từ: <strong>luckily</strong> $\leftrightarrow$ <strong>unluckily</strong>"
+            },
+            {
+                id: 13,
+                text: "Each of my friends has a (DIFFER) character.",
+                options: ["different", "difference", "differently", "differ"],
+                correct: "different",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng trước bổ nghĩa cho danh từ tính cách <em>character</em> $\rightarrow$ điền một **Tính từ**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>differ</strong> (khác biệt, bất đồng)<br>• Danh từ: <strong>difference</strong> (sự khác nhau)<br>• Tính từ: <strong>different</strong> (khác biệt)<br>• Trạng từ: <strong>differently</strong>"
+            },
+            {
+                id: 14,
+                text: "Nam is very (SOCIAL), kind and generous.",
+                options: ["sociable", "socialize", "social", "society"],
+                correct: "sociable",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau trạng từ mức độ <em>very</em> và kết hợp song hành bằng từ nối với các tính từ chỉ tính cách tốt như <em>kind, generous</em> $\rightarrow$ điền **Tính từ chỉ nét tính cách hòa đồng**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>socialize</strong> (giao lưu, hòa nhập)<br>• Danh từ: <strong>society</strong> (xã hội)<br>• Tính từ: <strong>social</strong> (thuộc xã hội), <strong>sociable</strong> (hòa đồng, mến khách)"
+            },
+            {
+                id: 15,
+                text: "My uncle often spends his free time doing volunteer work at a local (ORPHAN).",
+                options: ["orphanage", "orphan", "orphaned", "orphanhood"],
+                correct: "orphanage",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau tính từ vị trí cụm <em>at a local...</em>, cần một **Danh từ chỉ địa điểm/nơi chốn** thích hợp với việc làm từ thiện.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>orphan</strong> (làm cho mồ côi)<br>• Danh từ: <strong>orphan</strong> (trẻ mồ côi), <strong>orphanage</strong> (trại trẻ mồ côi)<br>• Tính từ: <strong>orphaned</strong> (bị mồ côi)"
+            },
+            {
+                id: 16,
+                text: "She has short (CURL) hair.",
+                options: ["curly", "curling", "curled", "curl"],
+                correct: "curly",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng trước danh từ mái tóc <em>hair</em> $\rightarrow$ cần điền một **Tính từ** miêu tả tính chất bộ phận đặc điểm (tóc xoăn).<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: <strong>curl</strong> (uốn xoăn / lọn tóc xoăn)<br>• Tính từ: <strong>curly</strong> (xoăn)"
+            },
+            {
+                id: 17,
+                text: "Trung and his brother like (ACT) movies very much.",
+                options: ["action", "actor", "active", "activity"],
+                correct: "action",
+                explain: "<strong>Lý do chọn từ loại:</strong> Kết hợp danh từ đứng sau để tạo thành cụm danh từ ghép chỉ thể loại phim: <em>action movies</em> (phim hành động).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>act</strong> (hành động, diễn xuất)<br>• Danh từ: <strong>action</strong> (hành động), <strong>actor/actress</strong> (diễn viên), <strong>activity</strong> (hoạt động)<br>• Tính từ: <strong>active</strong> (tích cực, chủ động)"
+            },
+            {
+                id: 18,
+                text: "Bell experimented with ways of transmitting (SPEAK) over a long distance.",
+                options: ["speech", "speaker", "speaking", "spoken"],
+                correct: "speech",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau động từ truyền tải dạng V-ing <em>transmitting</em>, vị trí này đóng vai trò làm tân ngữ trực tiếp nên cần điền một **Danh từ** (tiếng nói, giọng nói).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>speak</strong> (nói)<br>• Danh từ: <strong>speech</strong> (tiếng nói/bài diễn văn), <strong>speaker</strong> (người nói/loa phát thanh)<br>• Tính từ: <strong>spoken</strong> (bằng lời nói), <strong>speechless</strong> (không nói nên lời)"
+            },
+            {
+                id: 19,
+                text: "Bell (SUCCESS) demonstrated his invention.",
+                options: ["successfully", "successful", "success", "succeed"],
+                correct: "successfully",
+                explain: "<strong>Lý do chọn từ loại:</strong> Từ đứng trước động từ hành động chính <em>demonstrated</em> (biểu diễn/chứng minh) nhằm bổ nghĩa cho hành động đó $\rightarrow$ điền **Trạng từ**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>succeed</strong> (thành công)<br>• Danh từ: <strong>success</strong> (sự thành công)<br>• Tính từ: <strong>successful</strong> (thành công)<br>• Trạng từ: <strong>successfully</strong>"
+            },
+            {
+                id: 20,
+                text: "Mr Phong made an (ARRANGE) to see us at two o’clock.",
+                options: ["arrangement", "arrange", "arranging", "arranged"],
+                correct: "arrangement",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đi sau mạo từ <em>an</em> kết hợp động từ <em>make</em> tạo thành cụm từ diễn đạt cố định: <em>make an arrangement</em> (thu xếp cuộc hẹn, sắp xếp công việc).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>arrange</strong> (sắp đặt, thu xếp)<br>• Danh từ: <strong>arrangement</strong> (sự sắp xếp, thỏa thuận)"
+            },
+            {
+                id: 21,
+                text: "Thomas Watson was Bell’s (ASSIST), wasn’t he?",
+                options: ["assistant", "assistance", "assist", "assisted"],
+                correct: "assistant",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau sở hữu cách <em>Bell’s</em> và đóng vai trò bổ ngữ định danh cho con người $\rightarrow$ điền **Danh từ chỉ người** (người trợ lý).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>assist</strong> (giúp đỡ, trợ giúp)<br>• Danh từ: <strong>assistance</strong> (sự trợ giúp), <strong>assistant</strong> (trợ lý)"
+            },
+            {
+                id: 22,
+                text: "There wasn’t any (ELECTRIC) in our village two years ago.",
+                options: ["electricity", "electric", "electrical", "electrician"],
+                correct: "electricity",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau từ hạn định đo lường phủ định <em>any</em>, vị trí này cần điền một **Danh từ** không đếm được (nguồn điện/điện lưới).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>electricity</strong> (điện lực), <strong>electrician</strong> (thợ điện)<br>• Tính từ: <strong>electric</strong> (chạy bằng điện), <strong>electrical</strong> (liên quan đến điện)"
+            },
+            {
+                id: 23,
+                text: "“The lost shoe” is one of the (TRADITION) stories I like best.",
+                options: ["traditional", "tradition", "traditionally", "traditionalism"],
+                correct: "traditional",
+                explain: "<strong>Lý do chọn từ loại:</strong> Từ đứng trước bổ nghĩa đặc trưng tính chất cho danh từ số nhiều câu chuyện <em>stories</em> $\rightarrow$ điền **Tính từ** (thuộc về truyền thống/truyện cổ tích).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>tradition</strong> (truyền thống)<br>• Tính từ: <strong>traditional</strong> (mang tính truyền thống)<br>• Trạng từ: <strong>traditionally</strong>"
+            },
+            {
+                id: 24,
+                text: "Everyone was (EXCITE) at the soccer match.",
+                options: ["excited", "exciting", "excitement", "excite"],
+                correct: "excited",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau động từ tobe <em>was</em> chỉ cảm xúc. Vì chủ ngữ là đại từ chỉ người <em>Everyone</em> tiếp nhận cảm xúc từ trận đấu nên dùng tính từ đuôi **-ed**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>excite</strong> (gây kích động, hào hứng)<br>• Danh từ: <strong>excitement</strong> (sự hào hứng)<br>• Tính từ: <strong>excited</strong> (cảm xúc người), <strong>exciting</strong> (tính chất vật/sự kiện)"
+            },
+            {
+                id: 25,
+                text: "The noise in the city kept Hoa (WAKE) at night.",
+                options: ["awake", "awaken", "waking", "woke"],
+                correct: "awake",
+                explain: "<strong>Lý do chọn từ loại:</strong> Áp dụng cấu trúc tác động trạng thái cốt lõi: <em>keep + someone + awake</em> (giữ cho ai đó tỉnh táo/không ngủ được). Do đó cần điền tính từ <em>awake</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>wake</strong> / <strong>awaken</strong> (đánh thức, thức giấc)<br>• Tính từ: <strong>awake</strong> (tỉnh táo, thức)<br>• Danh từ: <strong>awakening</strong> (sự thức tỉnh)"
+            },
+            {
+                id: 26,
+                text: "Mr. Tan has a very (PAIN) tooth.",
+                options: ["painful", "painless", "pain", "painfully"],
+                correct: "painful",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau trạng từ <em>very</em> và đứng trước danh từ cái răng <em>tooth</em> $\rightarrow$ cần điền một **Tính từ** miêu tả tính chất (răng đau buốt).<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: <strong>pain</strong> (sự đau đớn / làm đau)<br>• Tính từ: <strong>painful</strong> (đau đớn) $\leftrightarrow$ <strong>painless</strong> (không đau)<br>• Trạng từ: <strong>painfully</strong>"
+            },
+            {
+                id: 27,
+                text: "He (HOT) a pan and stir-fried the beef.",
+                options: ["heated", "hot", "heater", "heating"],
+                correct: "heated",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng ngay sau chủ ngữ <em>He</em> và trước tân ngữ cái chảo, vị trí này cần một **Động từ chính**. Vế sau chia quá khứ đơn (stir-fried) nên vế trước chia quá khứ thêm đuôi -ed.<br><br><strong>💎 Word Family:</strong><br>• Danh từ/Động từ: <strong>heat</strong> (hơi nóng / làm nóng)<br>• Tính từ: <strong>hot</strong> (nóng), <strong>heated</strong> (nảy lửa/gay gắt)<br>• Trạng từ: <strong>heatedly</strong>"
+            },
+            {
+                id: 28,
+                text: "Sugar is not an (HEALTH) food because we need it to live.",
+                options: ["unhealthy", "healthy", "health", "healthily"],
+                correct: "unhealthy",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng trước danh từ món ăn <em>food</em> cần một tính từ. Ngữ cảnh dùng phủ định kép 'not an unhealthy food' mang ý nghĩa không phải là một thực phẩm hoàn toàn độc hại vì cơ thể vẫn cần đường để sinh tồn.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>health</strong> (sức khỏe)<br>• Tính từ: <strong>healthy</strong> (khỏe mạnh) $\leftrightarrow$ <strong>unhealthy</strong> (không tốt cho sức khỏe)"
+            },
+            {
+                id: 29,
+                text: "Catching the common cold is (PLEASE) for everybody.",
+                options: ["unpleasant", "pleasant", "pleased", "pleasure"],
+                correct: "unpleasant",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau hệ động từ tobe <em>is</em>. Việc bị mắc bệnh cảm lạnh mang lại trải nghiệm không thoải mái, mệt mỏi nên ta dùng **Tính từ mang nghĩa phủ định**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>please</strong> (làm hài lòng)<br>• Danh từ: <strong>pleasure</strong> (niềm vinh hạnh)<br>• Tính từ: <strong>pleasant</strong> (dễ chịu) $\leftrightarrow$ <strong>unpleasant</strong> (khó chịu, tồi tệ)"
+            },
+            {
+                id: 30,
+                text: "Don't worry! Your cold will last for a few days and then (APPEAR).",
+                options: ["disappear", "appear", "appearance", "disappearance"],
+                correct: "disappear",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau trợ động từ khuyết thiếu <em>will</em> của mệnh đề song hành, vị trí này cần một **Động từ nguyên mẫu**. Xét theo logic hết bệnh: cảm lạnh kéo dài vài ngày rồi biến mất.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>appear</strong> (xuất hiện) $\leftrightarrow$ <strong>disappear</strong> (biến mất)<br>• Danh từ: <strong>appearance</strong> (di diện mạo) $\leftrightarrow$ <strong>disappearance</strong> (sự biến mất)"
+            },
+            {
+                id: 31,
+                text: "I have (LITTLE) time to play than my friend.",
+                options: ["less", "least", "little", "lesser"],
+                correct: "less",
+                explain: "<strong>Lý do chọn từ loại:</strong> Vế câu chứa từ khóa so sánh **than**. Đi kèm danh từ không đếm được là thời gian <em>time</em>, dạng so sánh hơn bất quy tắc của tính từ <em>little</em> chuyển thành <em>less</em>.<br><br><strong>💎 Word Family:</strong><br>• Hệ tính từ định lượng mức độ: <strong>little</strong> (ít) $\rightarrow$ <strong>less</strong> (ít hơn) $\rightarrow$ <strong>least</strong> (ít nhất)"
+            },
+            {
+                id: 32,
+                text: "My sister has a big (COLLECT) of stamps.",
+                options: ["collection", "collector", "collect", "collective"],
+                correct: "collection",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau tính từ mô tả quy mô <em>big</em>, cần một **Danh từ chỉ vật thể**. Cụm từ <em>a collection of something</em> nghĩa là một bộ sưu tập cái gì.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>collect</strong> (thu thập, sưu tầm)<br>• Danh từ: <strong>collection</strong> (bộ sưu tập), <strong>collector</strong> (nhà sưu tập)<br>• Tính từ: <strong>collective</strong> (mang tính tập thể)"
+            },
+            {
+                id: 33,
+                text: "My favorite subject at school is physical (EDUCATE).",
+                options: ["education", "educational", "educator", "educate"],
+                correct: "education",
+                explain: "<strong>Lý do chọn từ loại:</strong> Kết hợp từ chuyên ngành <em>physical</em> tạo thành tên danh từ ghép chỉ bộ môn học Giáo dục thể chất (Thể dục): <em>Physical Education (PE)</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>educate</strong> (giáo dục)<br>• Danh từ: <strong>education</strong> (nền giáo dục), <strong>educator</strong> (nhà giáo dục)<br>• Tính từ: <strong>educational</strong> (có tính giáo dục)"
+            },
+            {
+                id: 34,
+                text: "What a (WONDER) picture!",
+                options: ["wonderful", "wonder", "wonderfully", "wondering"],
+                correct: "wonderful",
+                explain: "<strong>Lý do chọn từ loại:</strong> Nằm trong cấu trúc ngữ pháp câu cảm thán hình thái đặc trưng: <em>What + a/an + Tính từ + Danh từ!</em> $\rightarrow$ điền tính từ <em>wonderful</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: <strong>wonder</strong> (tự hỏi / kỳ quan)<br>• Tính từ: <strong>wonderful</strong> (tuyệt vời)<br>• Trạng từ: <strong>wonderfully</strong>"
+            },
+            {
+                id: 35,
+                text: "My friend and I write to each other (REGULAR).",
+                options: ["regularly", "regular", "regularity", "regulate"],
+                correct: "regularly",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng cuối câu nhằm bổ nghĩa trực tiếp cho hành động tương tác thường xuyên là viết thư liên lạc <em>write to each other</em> $\rightarrow$ cần điền **Trạng từ**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>regulate</strong> (quy định, điều chỉnh)<br>• Danh từ: <strong>regularity</strong> (sự đều đặn), <strong>regulation</strong> (quy định)<br>• Tính từ: <strong>regular</strong> (đều đặn, thường xuyên)<br>• Trạng từ: <strong>regularly</strong>"
+            },
+            {
+                id: 36,
+                text: "Guitar is a (MUSIC) instrument.",
+                options: ["musical", "music", "musician", "musically"],
+                correct: "musical",
+                explain: "<strong>Lý do chọn từ loại:</strong> Cấu trúc collocation danh từ ghép cố định dùng chỉ các loại nhạc cụ âm nhạc trên thế giới: <em>musical instrument</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>music</strong> (âm nhạc), <strong>musician</strong> (nhạc sĩ)<br>• Tính từ: <strong>musical</strong> (thuộc về âm nhạc/nhạc kịch)<br>• Trạng từ: <strong>musically</strong>"
+            },
+            {
+                id: 37,
+                text: "I have (LITTLE) time to play than my friends do.",
+                options: ["less", "least", "little", "lesser"],
+                correct: "less",
+                explain: "<strong>Lý do chọn từ loại:</strong> Cấu trúc câu so sánh hơn chứa từ <strong>than</strong> đi kèm danh từ không đếm được <em>time</em>. Ta chuyển đổi <em>little</em> thành trạng thái so sánh hơn tương ứng là <em>less</em>."
+            },
+            {
+                id: 38,
+                text: "You should do morning exercises to have a (HEALTH) body.",
+                options: ["healthy", "health", "healthily", "unhealthy"],
+                correct: "healthy",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng trước danh từ cơ thể <em>body</em> bổ nghĩa trạng thái thể chất tốt nhờ tập thể dục buổi sáng $\rightarrow$ điền **Tính từ mang nghĩa tích cực** (khỏe mạnh).<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>health</strong> (sức khỏe)<br>• Tính từ: <strong>healthy</strong> (khỏe mạnh) $\leftrightarrow$ <strong>unhealthy</strong> (ốm yếu/độc hại)<br>• Trạng từ: <strong>healthily</strong>"
+            },
+            {
+                id: 39,
+                text: "Where is the (NEAR) restaurant?",
+                options: ["nearest", "nearer", "near", "nearly"],
+                correct: "nearest",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng ngay sau mạo từ xác định hệ thống **the** và đứng trước danh từ tiệm ăn, cấu trúc đòi hỏi một tính từ ngắn ở dạng so sánh nhất (gần nhất).<br><br><strong>💎 Word Family:</strong><br>• Tính từ/Trạng từ: <strong>near</strong> (gần) $\rightarrow$ <strong>nearer</strong> $\rightarrow$ <strong>nearest</strong> (gần nhất)<br>• Trạng từ mức độ: <strong>nearly</strong> (gần như, suýt soát)"
+            },
+            {
+                id: 40,
+                text: "There is an (EXCITE) football match this afternoon.",
+                options: ["exciting", "excited", "excitement", "excite"],
+                correct: "exciting",
+                explain: "<strong>Lý do chọn từ loại:</strong> Cần tính từ bổ nghĩa cho danh từ chỉ vật/sự kiện trận đấu <em>football match</em>. Để diễn tả bản chất, tính chất hấp dẫn tự thân của sự vật ta dùng đuôi **-ing**.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>excite</strong> (gây kích động)<br>• Danh từ: <strong>excitement</strong> (sự hào hứng)<br>• Tính từ: <strong>excited</strong> (cảm xúc người) $\leftrightarrow$ <strong>exciting</strong> (tính chất sự vật)"
+            },
+            {
+                id: 41,
+                text: "There is no (DIFFER) between my answer and his.",
+                options: ["difference", "different", "differently", "differ"],
+                correct: "difference",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng ngay sau từ hạn định chỉ sự không có <strong>no</strong>, vị trí này bắt buộc phải điền một **Danh từ** (sự khác biệt).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>differ</strong> (khác biệt, bất đồng)<br>• Danh từ: <strong>difference</strong> (sự khác nhau)<br>• Tính từ: <strong>different</strong> (khác biệt)<br>• Trạng từ: <strong>differently</strong>"
+            },
+            {
+                id: 42,
+                text: "The (PERFORM) she gave last night was marvellous.",
+                options: ["performance", "performer", "perform", "performing"],
+                correct: "performance",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau mạo từ xác định <em>The</em> đứng đầu câu, làm vai trò chủ ngữ chính cho toàn bộ cấu trúc câu $\rightarrow$ điền **Danh từ chỉ sự việc** (buổi biểu diễn/tiết mục).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>perform</strong> (biểu diễn, thực hiện)<br>• Danh từ: <strong>performance</strong> (buổi biểu diễn/hiệu suất), <strong>performer</strong> (người biểu diễn)"
+            },
+            {
+                id: 43,
+                text: "There are many badminton (COMPETE) nowadays.",
+                options: ["competitions", "competitive", "competitors", "compete"],
+                correct: "competitions",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau trạng từ chỉ số lượng nhiều <em>many</em>, ta cần một **Danh từ đếm được số nhiều** (các cuộc thi đấu).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>compete</strong> (cạnh tranh, thi đấu)<br>• Danh từ: <strong>competition</strong> (cuộc thi), <strong>competitor</strong> (đối thủ cạnh tranh)<br>• Tính từ: <strong>competitive</strong> (mang tính cạnh tranh)"
+            },
+            {
+                id: 44,
+                text: "Ba will be a (FAME) artist someday.",
+                options: ["famous", "fame", "famously", "infamous"],
+                correct: "famous",
+                explain: "<strong>Lý do chọn từ loại:</strong> Từ đứng trước bổ nghĩa đặc tính danh tiếng cho danh từ chỉ người làm nghệ thuật <em>artist</em> $\rightarrow$ điền **Tính từ**.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>fame</strong> (danh tiếng)<br>• Tính từ: <strong>famous</strong> (nổi tiếng) $\leftrightarrow$ <strong>infamous</strong> (tai tiếng, khét tiếng)"
+            },
+            {
+                id: 45,
+                text: "Mr. Pike didn’t go to work yesterday because of his (ILL).",
+                options: ["illness", "ill", "illly", "illnesses"],
+                correct: "illness",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau cụm giới từ nguyên nhân <em>because of</em> kết hợp từ sở hữu <em>his</em>, ta cần một **Danh từ** chỉ tình trạng thể chất kém (căn bệnh/sự ốm đau).<br><br><strong>💎 Word Family:</strong><br>• Tính từ: <strong>ill</strong> (ốm yếu, tồi tệ)<br>• Danh từ: <strong>illness</strong> (sự đau ốm, căn bệnh)"
+            },
+            {
+                id: 46,
+                text: "There are about 200 (EMPLOY) in this company.",
+                options: ["employees", "employers", "employment", "unemployment"],
+                correct: "employees",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau số đếm quy mô lớn <em>about 200</em>, vị trí này cần danh từ số nhiều chỉ người lao động được thuê trong bộ máy doanh nghiệp $\rightarrow$ chọn <em>employees</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>employ</strong> (thuê, tuyển dụng)<br>• Danh từ: <strong>employer</strong> (ông chủ), <strong>employee</strong> (nhân viên), <strong>employment</strong> (việc làm) $\leftrightarrow$ <strong>unemployment</strong> (sự thất nghiệp)"
+            },
+            {
+                id: 47,
+                text: "This lovely apartment has two bedrooms and it is (FURNISH).",
+                options: ["furnished", "furniture", "furnishing", "furnish"],
+                correct: "furnished",
+                explain: "<strong>Lý do chọn từ loại:</strong> Tính từ dạng phân từ bị động (**V-ed**) đứng sau tobe <em>is</em> mô tả trạng thái nội thất của căn hộ (được trang bị sẵn đầy đủ đồ đạc).<br><br><strong>💎 Word Family:</strong><br>• Động từ: <strong>furnish</strong> (trang bị nội thất)<br>• Danh từ: <strong>furniture</strong> (đồ đạc nội thất - danh từ không đếm được)<br>• Tính từ: <strong>furnished</strong> (có sẵn đồ) $\leftrightarrow$ <strong>unfurnished</strong> (nhà trống)"
+            },
+            {
+                id: 48,
+                text: "My father has a (PORT) computer. He often brings it with him when he’s away on business.",
+                options: ["portable", "port", "porter", "portfolio"],
+                correct: "portable",
+                explain: "<strong>Lý do chọn từ loại:</strong> Dựa vào ngữ cảnh hay mang theo đi công tác xa, ta cần một tính từ bổ nghĩa cho máy tính chỉ tính chất gọn nhẹ, cơ động, dễ mang xách $\rightarrow$ chọn <em>portable</em>.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>port</strong> (bến cảng), <strong>porter</strong> (phu khuân vác)<br>• Tính từ: <strong>portable</strong> (gọn nhẹ, có thể di chuyển mang theo)<br>• Danh từ chỉ trạng thái: <strong>portability</strong> (tính cơ động)"
+            },
+            {
+                id: 49,
+                text: "They are (LOAD) the vegetables from the truck.",
+                options: ["unloading", "loading", "loaded", "load"],
+                correct: "unloading",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đi sau cấu trúc tobe <em>are</em> tạo thì tiếp diễn. Dựa vào giới từ tách rời **from the truck** (từ trên xe xuống), hành động phải mang nghĩa dỡ hàng hóa ngược lại $\rightarrow$ dùng <em>unloading</em>.<br><br><strong>💎 Word Family:</strong><br>• Động từ/Danh từ: <strong>load</strong> (chất hàng / gánh nặng hàng hóa)<br>• Động từ ngược nghĩa: <strong>unload</strong> (dỡ hàng xuống), <strong>overload</strong> (làm cho quá tải)"
+            },
+            {
+                id: 50,
+                text: "Diana is a (FLOWER). She sells flowers at a shop in New York.",
+                options: ["florist", "flower", "flowery", "flour"],
+                correct: "florist",
+                explain: "<strong>Lý do chọn từ loại:</strong> Đứng sau mạo từ <em>a</em> và đóng vai trò chỉ danh xưng nghề nghiệp bán hoa tươi tại cửa hàng $\rightarrow$ điền **Danh từ chuyên biệt chỉ người làm nghề bán hoa**.<br><br><strong>💎 Word Family:</strong><br>• Danh từ: <strong>flower</strong> (bông hoa), <strong>florist</strong> (người kinh doanh bán hoa tươi)<br>• Tính từ: <strong>flowery</strong> (đầy hoa/văn chương hoa mỹ)"
+            }
+        ];
+
+        let studentAnswersTrack = {};
+
+        // Thuật toán xáo trộn đáp án ngẫu nhiên chống học vẹt (Fisher-Yates Shuffle)
+        function mixOptionsRandomly(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Kỹ thuật tự động tạo DOM 50 câu hỏi đầy đủ
+        function buildQuizLayout() {
+            const rootNode = document.getElementById('quiz-injector-node');
+            rootNode.innerHTML = "";
+
+            dataset.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-block-${item.id}`;
+
+                let randomizedOptions = [...item.options];
+                mixOptionsRandomly(randomizedOptions);
+
+                let buttonsListMarkup = `<div class="options-list">`;
+                randomizedOptions.forEach((textOption, optIdx) => {
+                    const alphabetPrefix = ["A", "B", "C", "D"];
+                    const statusCheck = (textOption === item.correct);
+                    buttonsListMarkup += `
+                        <button class="option-btn" data-correct="${statusCheck}" onclick="validateUserClick(this, ${item.id})">
+                            <strong>${alphabetPrefix[optIdx]}.</strong> ${textOption}
+                        </button>
+                    `;
+                });
+                buttonsListMarkup += `</div>`;
+
+                card.innerHTML = `
+                    <div class="card-meta-title">Câu kiểm tra Word Form số ${index + 1} / 50</div>
+                    <div class="question-text">${item.text}</div>
+                    ${buttonsListMarkup}
+                    <div class="explanation-box" id="explain-box-id-${item.id}">
+                        <div class="explanation-title">💡 BẢNG PHÂN TÍCH CHUYÊN SÂU:</div>
+                        <div class="explanation-content">${item.explain}</div>
+                    </div>
+                `;
+                rootNode.appendChild(card);
+            });
+        }
+
+        // Xử lý sự kiện click chọn đáp án phản hồi tức thì
+        function validateUserClick(buttonElement, questionId) {
+            if (studentAnswersTrack[questionId] !== undefined) return;
+
+            const isCorrect = buttonElement.getAttribute('data-correct') === 'true';
+            studentAnswersTrack[questionId] = isCorrect;
+
+            const currentCardNode = document.getElementById(`q-card-block-${questionId}`);
+            const siblingButtons = currentCardNode.querySelectorAll('.option-btn');
+
+            if (isCorrect) {
+                buttonElement.classList.add('correct');
+                triggerSyntheticSound('correct');
+                launchConfettiEffect();
+            } else {
+                buttonElement.classList.add('wrong');
+                currentCardNode.classList.add('shake-animation');
+                triggerSyntheticSound('wrong');
+
+                // Tự động tô xanh đáp án đúng để đối chiếu học tập
+                siblingButtons.forEach(btn => {
+                    if (btn.getAttribute('data-correct') === 'true') {
+                        btn.classList.add('correct');
+                    }
+                });
+
+                setTimeout(() => {
+                    currentCardNode.classList.remove('shake-animation');
+                }, 450);
+            }
+
+            siblingButtons.forEach(btn => btn.classList.add('disabled'));
+            document.getElementById(`explain-box-id-${questionId}`).style.display = "block";
+        }
+
+        // Động cơ hiệu ứng hạt pháo giấy bằng Canvas độc lập
+        const canvasElement = document.getElementById('confetti-canvas');
+        const ctxNode = canvasElement.getContext('2d');
+        let confettiCollection = [];
+
+        function dynamicCanvasResize() {
+            canvasElement.width = window.innerWidth;
+            canvasElement.height = window.innerHeight;
+        }
+        window.addEventListener('resize', dynamicCanvasResize);
+        dynamicCanvasResize();
+
+        function launchConfettiEffect() {
+            const colors = ['#FF4757', '#00D26A', '#8854C0', '#FDCB6E', '#00C9A7', '#FFFFFF'];
+            for (let i = 0; i < 35; i++) {
+                confettiCollection.push({
+                    x: Math.random() * canvasElement.width,
+                    y: Math.random() * canvasElement.height - canvasElement.height,
+                    size: Math.random() * 6 + 6,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedX: Math.random() * 4 - 2,
+                    speedY: Math.random() * 4 + 4,
+                    rotation: Math.random() * 360,
+                    rotationSpeed: Math.random() * 4 - 2
+                });
+            }
+        }
+
+        function animationLoop() {
+            ctxNode.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            confettiCollection.forEach((p, index) => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                p.rotation += p.rotationSpeed;
+
+                ctxNode.save();
+                ctxNode.translate(p.x, p.y);
+                ctxNode.rotate((p.rotation * Math.PI) / 180);
+                ctxNode.fillStyle = p.color;
+                ctxNode.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                ctxNode.restore();
+
+                if (p.y > canvasElement.height) {
+                    confettiCollection.splice(index, 1);
+                }
+            });
+            requestAnimationFrame(animationLoop);
+        }
+        requestAnimationFrame(animationLoop);
+
+        // Tổng hợp và đánh giá kết quả cuối cùng bài làm khi bấm nút Nộp Bài
+        function processQuizEvaluation() {
+            let totalQuestions = dataset.length;
+            let correctCount = 0;
+
+            dataset.forEach(q => {
+                if (studentAnswersTrack[q.id] === true) {
+                    correctCount++;
+                }
+            });
+
+            let percentageResult = (correctCount / totalQuestions) * 100;
+            let finalTeacherComment = "";
+
+            if (percentageResult < 50) {
+                finalTeacherComment = "Điểm số cấu trúc từ loại chưa đạt mức an toàn. Con cần đọc kỹ bảng Word Family của từng câu để cải thiện phản xạ từ loại!";
+            } else if (percentageResult >= 50 && percentageResult <= 80) {
+                finalTeacherComment = "Con đã nắm vững các quy tắc từ loại cơ bản ở trường. Hãy ghi chép lại các từ phái sinh nâng cao để bứt phá điểm thi chuyên nhé!";
+            } else {
+                finalTeacherComment = "Bản lĩnh từ loại xuất sắc chuẩn học sinh giỏi! Con hoàn toàn sẵn sàng chinh phục các kỳ thi lớn.";
+            }
+
+            document.getElementById('score-text').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('feedback-text').innerText = finalTeacherComment;
+            document.getElementById('score-modal').classList.add('active');
+
+            if (percentageResult >= 75) {
+                for (let k = 0; k < 5; k++) {
+                    setTimeout(launchConfettiEffect, k * 250);
+                }
+            }
+        }
+
+        function reloadQuizLayout() {
+            studentAnswersTrack = {};
+            confettiCollection = [];
+            document.getElementById('score-modal').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(buildQuizLayout, 400);
+        }
+
+        window.onload = function() {
+            buildQuizLayout();
+        };
+    </script>
+</body>
+</html>
